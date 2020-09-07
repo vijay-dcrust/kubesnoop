@@ -1,0 +1,11 @@
+domain: kubesnoop.io
+layout: go.kubebuilder.io/v2
+projectName: kubesnoop
+repo: github.com/vijay-dcrust/kubesnoop
+resources:
+- group: core
+  kind: LifeCycle
+  version: v1alpha1
+version: 3-alpha
+plugins:
+  go.sdk.operatorframework.io/v2-alpha: {}

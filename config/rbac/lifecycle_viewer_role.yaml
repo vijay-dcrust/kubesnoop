@@ -1,0 +1,20 @@
+# permissions for end users to view lifecycles.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: lifecycle-viewer-role
+rules:
+- apiGroups:
+  - core.kubesnoop.io
+  resources:
+  - lifecycles
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - core.kubesnoop.io
+  resources:
+  - lifecycles/status
+  verbs:
+  - get

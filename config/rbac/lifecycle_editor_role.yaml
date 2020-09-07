@@ -1,0 +1,24 @@
+# permissions for end users to edit lifecycles.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: lifecycle-editor-role
+rules:
+- apiGroups:
+  - core.kubesnoop.io
+  resources:
+  - lifecycles
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - core.kubesnoop.io
+  resources:
+  - lifecycles/status
+  verbs:
+  - get
