@@ -19,6 +19,7 @@ package controllers
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/go-logr/logr"
 	v1 "k8s.io/api/core/v1"
@@ -43,20 +44,24 @@ type LifeCycleReconciler struct {
 func (r *LifeCycleReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	ctx := context.Background()
 	_ = r.Log.WithValues("lifecycle", req.NamespacedName)
-
-	// your logic here
+	//Reconciler loop logic
 	for {
 		podList := &v1.PodList{}
 		opts := []client.ListOption{
 			client.InNamespace(req.NamespacedName.Namespace),
 			//client.MatchingLabels{"k8s-app": "nexus-nginx"},
 		}
+		//err := r.client.Get(context.TODO(), req.NamespacedName, podList)
 		err := r.List(ctx, podList, opts...)
 		if err != nil {
 			fmt.Println("Error:", err)
 		}
-		fmt.Println("Podlist:\n", *podList)
-		return ctrl.Result{}, nil
+		fmt.Println("PodName, StartTime, Status")
+		for _, pod := range podList.Items {
+			fmt.Println(pod.Name, pod.Status.StartTime, pod.Status.Phase)
+		}
+		//return ctrl.Result{}, nil
+		time.Sleep(20 * time.Second)
 	}
 }
 
